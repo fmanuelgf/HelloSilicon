@@ -23,5 +23,5 @@ _start: mov	X0, #1		// 1 = StdOut
 	mov     X16, #1		// System call number 1 terminates this program
 	svc     #0x80		// Call kernel to terminate the program
 
-helloworld:      .ascii  "Hello World!\n"
+helloworld:      .ascii  "Hello ", "World!\n"
 
