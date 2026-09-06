@@ -213,6 +213,29 @@ Sample code can be found in Chapter 4 in the file [`case.s`](Chapter%2004/case.s
 
 The important differences in memory addressing for Darwin were already addresed above.
 
+On a general note, there can be some confusion what a **WORD** is. The book says that the `LDR` instruction takes an offset from PC in "words", which are understood to be 32 bits. But in the "Double Registers" part, 128-bit long data is called an *octaword*, which would imply a **WORD** is 16 bits.
+
+I asked Stephen Smith, the book's author, about this, and his reply was:
+
+> Yes, there is certainly confusion around this point on a couple of fronts.
+>
+> Usually a processor’s word size is the size of its regular integer registers. However, ARM made the decision to keep calling a **WORD** 32 bits even in the ARM64 architecture. So throughout the ARM documentation, a **WORD** is still 32 bits.
+>
+> Then there is the GNU assembler, which has kept several storage directive names unchanged across multiple processor generations. The GNU documentation states:
+>
+> ```asm
+> .octa bignums
+> ```
+>
+> This directive expects zero or more bignums, separated by commas.
+> For each bignum, it emits a 16-byte integer.
+>
+> The term *“octa”* comes from historical contexts where a *word* was two bytes — hence an *octa-word* meaning 16 bytes.
+>
+> So again, `.octa` is a historical naming convention and is not related to the actual architectural word size.
+
+My only addition is that clang's `as` also kept the `.octa` directive unchanged.
+
 ### Listing 5-1
 The `quad`, `octa` and `fill` keywords must be in lowercase for the llvm assembler. (See bottom of this file)
 
